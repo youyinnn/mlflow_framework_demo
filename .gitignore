@@ -2,3 +2,5 @@ mlruns
 .empty
 
 __pycache__
+
+lightning_logs

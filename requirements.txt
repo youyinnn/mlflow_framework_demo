@@ -8,3 +8,5 @@ numpy==1.24.3
 autopep8==2.0.2
 pandas==2.1.2
 backend_central_dev
+gco-wrapper
+mlflow
