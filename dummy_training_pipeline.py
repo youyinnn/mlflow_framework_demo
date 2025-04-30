@@ -9,13 +9,14 @@ import lightning as L
 import mlflow
 import multiprocessing
 
-mlflow.set_tracking_uri('http://localhost:8080')
+# mlflow.set_tracking_uri('http://localhost:8080')
 
 # Auto log all MLflow entities
-mlflow.pytorch.autolog()
+# mlflow.pytorch.autolog()
 
 
 def dummy_train():
+    # loc 13
     # train the model
     dm = DummyDataModule(
         img_size=128,
@@ -46,17 +47,21 @@ if __name__ == "__main__":
     rs_data = []
     num_exp = 100
     for _ in tqdm(range(num_exp)):
-        with mlflow.start_run() as run:
-            st1 = time.time()
-            run_with_multiprocessing(dummy_train)
-            et1 = time.time()
+        # with mlflow.start_run() as run:
+        st1 = time.time()
+        run_with_multiprocessing(dummy_train)
+        et1 = time.time()
 
-            st2 = time.time()
-            run_with_multiprocessing(dummy_eval)
-            et2 = time.time()
+        st2 = time.time()
+        run_with_multiprocessing(dummy_eval)
+        et2 = time.time()
 
         rs_data.append((et1 - st1, et2 - st2))
 
     rs_data = np.array(rs_data)
+    np.savez(
+        'dummy_training_pipeline_vanilla.npz',
+        rs_data=rs_data,
+    )
     # print(rs_data)
     print(rs_data.mean(axis=0))

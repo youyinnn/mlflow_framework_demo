@@ -9,9 +9,9 @@ from backend_central_dev.data_processing.dataset_utils import (
 import numpy as np
 
 
+# loc 9
 @dataclass
 class DummyDataset(XEraseDataset):
-
     num_classes: int = 10
     data_dir: list[str] = field(default_factory=lambda: [])
     test_size: float = 0.2
@@ -23,7 +23,7 @@ class DummyDataset(XEraseDataset):
         return None
 
 
+# loc 3
 @dataclass
 class DummyDataModule(NewBasicDataModule):
-
     dataset_class: Type = DummyDataset
