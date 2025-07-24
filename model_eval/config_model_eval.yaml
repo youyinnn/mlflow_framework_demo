@@ -1,0 +1,4 @@
+executor_info:
+  executor_name: model_eval_mlflow
+  executor_type: model_evaluation
+  executor_info: {}

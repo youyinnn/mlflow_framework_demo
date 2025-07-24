@@ -1,0 +1,4 @@
+executor_info:
+  executor_name: XAI_Pack_mlflow
+  executor_type: xai
+  executor_info: {}

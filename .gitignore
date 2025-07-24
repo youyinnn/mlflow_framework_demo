@@ -4,3 +4,10 @@ mlruns
 __pycache__
 
 lightning_logs
+
+mlartifacts
+
+*_storage
+
+*/static/logs
+*/static/rs
