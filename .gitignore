@@ -11,3 +11,11 @@ mlartifacts
 
 */static/logs
 */static/rs
+
+logs
+
+temp
+
+web
+
+*.log

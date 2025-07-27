@@ -1,4 +1,0 @@
-executor_info:
-  executor_name: CIFAR10_mlflow
-  executor_type: dataset
-  executor_info: {}
