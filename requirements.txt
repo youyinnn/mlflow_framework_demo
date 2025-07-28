@@ -10,3 +10,4 @@ pandas==2.1.2
 backend_central_dev
 gco-wrapper
 mlflow
+torchinfo
