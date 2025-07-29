@@ -21,3 +21,5 @@ web
 *.log
 
 runs
+
+*.ckpt
