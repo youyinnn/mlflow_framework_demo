@@ -15,13 +15,15 @@ from torchvision import transforms
 import lightning as L
 from mlflow_demo.xai_eval import rcap
 from mlflow_demo.xai import gradient_methods
-from tqdm import tqdm
+from tqdm import tqdm, trange
 from glob import glob
 
 from torchvision import models
 import torchmetrics
 
 from backend_central_dev.utils import data_utils
+
+from cifar_dataset import CIFAR_10_PNG_NewDataModule
 
 class MyImageDataset(Dataset):
     def __init__(self, img_dir, train=True, transform=None):
@@ -265,7 +267,7 @@ def task_function_train(run_name, task_parameters):
     
     trainer_params = dict(
         # max_epochs=5,
-        max_epochs=40,
+        max_epochs=20,
         # max_epochs=1,
         # limit_train_batches=1,
         # limit_test_batches=1,
@@ -387,7 +389,7 @@ def task_function_train_van(run_name, task_parameters):
     )
     
     trainer_params = dict(
-        max_epochs=40,
+        max_epochs=20,
         callbacks=[
             L.pytorch.callbacks.ModelCheckpoint(
                 monitor='val_acc',
@@ -543,20 +545,26 @@ if __name__ == "__main__":
     multiprocessing.set_start_method('spawn', force=True)
     process = multiprocessing.Pool(processes=1)
     
-    args = [
-        # "cifar10-mlflow-demo" + str(time.time()),
-        "cifar10-mlflow-demo-van-time" + str(time.time()),
-        # task_function_train,
-        task_function_train_van,
-        # task_function_train_mlxops,
-        dict(
-            batch_size=256,
-            device='cuda'
-        )
-    ]
-    as_rs = process.apply_async(
-        task_execution_wrapper,
-        args=args
+    dm = CIFAR_10_PNG_NewDataModule(
+        img_size=32,
+        batch_size=256,
     )
-    
-    as_rs.wait()
+    dm.prepare_data()
+    for i in trange(2, 9):
+        args = [
+            # "cifar10-mlflow-demo" + str(time.time()),
+            f"cifar10-mlflow-time-{i}-" + str(time.time()),
+            task_function_train,
+            # task_function_train_van,
+            # task_function_train_mlxops,
+            dict(
+                batch_size=256,
+                device='cuda'
+            )
+        ]
+        as_rs = process.apply_async(
+            task_execution_wrapper,
+            args=args
+        )
+        
+        as_rs.wait()
